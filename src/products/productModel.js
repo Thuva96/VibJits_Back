@@ -7,10 +7,10 @@ var ProductSchema = new Schema({
         type: String,
         required: true
     },
-    image: {
+    image: [{
         type: String,
         required:true
-    },
+    }],
     productname: {
         type: String,
         required:true
