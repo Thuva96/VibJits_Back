@@ -34,4 +34,18 @@ router.route('/product/delete/:id').delete(productController.deleteProductContro
 router.route('/product/get/:id').get(productController.findProductController);
 
 
+// Favourite route
+
+var favouriteController = require('../src/favourite/favouriteController');
+
+router.route('/favourite/getAll').get(favouriteController.getDataControllerfn);
+
+router.route('/favourite/create').post(favouriteController.createFavouriteControllerFn);
+
+router.route('/favourite/update/:id').patch(favouriteController.updateFavouriteController);
+
+router.route('/favourite/delete/:id').delete(favouriteController.deleteFavouriteController);
+
+router.route('/favourite/get/:id').get(favouriteController.findFavouriteController);
+
 module.exports = router;
