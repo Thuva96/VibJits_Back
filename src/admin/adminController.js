@@ -88,10 +88,10 @@ var deleteAdminController = async (req, res) => {
 
 // Function for Login function
 var loginControllerFn = async (req, res) => {
-  const { name, password } = req.body;
+  const { email, password } = req.body;
   try {
     const { user, token } = await adminService.loginAdminController(
-      name,
+      email,
       password
     );
     res

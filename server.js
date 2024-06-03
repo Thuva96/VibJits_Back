@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 require('dotenv').config();
-// var routes = require ('./routes//routes');
+var routes = require ('./routes//routes');
 const cors = require ('cors');
 var mongoose = require('mongoose');
 
@@ -20,7 +20,7 @@ mongoose.connect(process.env.MongoDbUrl,{
 
 app.use(cors());
 app.use(express.json());
-// app.use(routes);
+app.use(routes);
 
 app.listen(PORT, ()=>{
     console.log("App is Running on Port",PORT);
