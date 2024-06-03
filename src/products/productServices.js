@@ -21,19 +21,37 @@ module.exports.getProductDBService = (id) => {
   });
 };
 
-module.exports.createProductDBService = (productDetails) => {
-  return new Promise((resolve, reject) => {
-    var productModelData = new productModel();
-    productModelData.sku = productDetails.sku;
-    productModelData.image = productDetails.image;
-    productModelData.productname = productDetails.productname;
-    productModelData.price = productDetails.price;
-    productModelData.description = productDetails.description;
+module.exports.createProductDBService = async (productDetails) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // Find the current maximum SKU in the database
+      const maxSKUProduct = await productModel.findOne().sort({ sku: -1 });
 
-    productModelData
-      .save()
-      .then((result) => resolve(true))
-      .catch((error) => reject(false));
+      // Extract the numeric part of the SKU and find the next SKU number
+      const nextSKU = maxSKUProduct 
+        ? parseInt(maxSKUProduct.sku.replace("CA", "")) + 1 
+        : 1;
+
+      // Create new product with the next SKU, prefixed by "CA"
+      const productModelData = new productModel({
+        sku: `CA${nextSKU}`,
+        image: productDetails.image,
+        productname: productDetails.productname,
+        price: productDetails.price,
+        description: productDetails.description
+      });
+
+      productModelData
+        .save()
+        .then((result) => resolve(result))
+        .catch((error) => {
+          console.error("Error creating product:", error);
+          reject(false);
+        });
+    } catch (error) {
+      console.error("Error finding max SKU:", error);
+      reject(false);
+    }
   });
 };
 
