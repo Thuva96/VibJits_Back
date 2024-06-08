@@ -48,4 +48,9 @@ router.route('/favourite/delete/:id').delete(favouriteController.deleteFavourite
 
 router.route('/favourite/get/:id').get(favouriteController.findFavouriteController);
 
+
+// Upload route
+var uploadRoute = require('./uploadRoute')
+router.use('/upload', uploadRoute);
+
 module.exports = router;
